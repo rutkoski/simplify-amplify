@@ -1,6 +1,6 @@
 <?php
 
-class IconHelper extends Helper
+class IconHelper extends Simplify_View_Helper
 {
 
   const ICON = 'icon';

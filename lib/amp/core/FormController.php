@@ -3,18 +3,46 @@
 class FormController extends AmpController
 {
 
+  /**
+   * 
+   * @var Simplify_Form
+   */
   protected $Form;
 
+  /**
+   * 
+   * @var string
+   */
   protected $table;
 
+  /**
+   *
+   * @var string
+   */
   protected $pk;
 
+  /**
+   *
+   * @var int
+   */
   protected $limit;
 
+  /**
+   *
+   * @var string
+   */
   protected $title;
 
+  /**
+   *
+   * @var string
+   */
   protected $template = 'form_body';
 
+  /**
+   * (non-PHPdoc)
+   * @see Simplify_Controller::initialize()
+   */
   protected function initialize()
   {
     parent::initialize();
@@ -61,6 +89,10 @@ class FormController extends AmpController
     return $this->pk;
   }
 
+  /**
+   * (non-PHPdoc)
+   * @see Simplify_Controller::indexAction()
+   */
   protected function indexAction()
   {
     try {
@@ -72,7 +104,7 @@ class FormController extends AmpController
         return s::response()->redirect(s::request()->route());
       }
     }
-    catch (Simplify_Validation_ValidationException $e) {
+    catch (Simplify_ValidationException $e) {
       s::app()->warnings($e->getErrors());
     }
 

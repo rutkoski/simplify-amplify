@@ -19,22 +19,27 @@
   <?= $this->html->js('jquery.ui.datepicker-pt-BR') ?>
   <?= $this->html->js('jquery-ui') ?>
   <?= $this->html->js('jquery-ui-timepicker-addon') ?>
-  <?= $this->html->js('../fancybox/jquery.fancybox.pack.js') ?>
-  <?= $this->html->js('../wysiwyg/jquery.wysiwyg.js') ?>
+  <?= $this->html->js('/fancybox/jquery.fancybox.pack.js') ?>
+  <?= $this->html->js('/wysiwyg/jquery.wysiwyg.js') ?>
   <?= $this->html->js('knockout-latest.js') ?>
   <?= $this->html->js('knockout.mapping-latest.js') ?>
-  <?= $this->html->js('../bootstrap/js/bootstrap.js') ?>
+  <?= $this->html->js('/bootstrap/js/bootstrap.js') ?>
 
-  <?= $this->html->css('custom-theme/jquery-ui-1.8.16.custom.css') ?>
-  <?= $this->html->css('../fancybox/jquery.fancybox.css') ?>
-  <?= $this->html->css('../wysiwyg/jquery.wysiwyg.css') ?>
-  <?= $this->html->css('../bootstrap/css/bootstrap.min.css') ?>
-  <?= $this->html->css('../bootstrap/css/bootstrap-responsive.min.css') ?>
-  <?= $this->html->css('../bootstrap/css/font-awesome.css') ?>
+  <?= $this->html->css('custom-theme/jquery-ui.custom.css') ?>
+  <?= $this->html->css('custom-theme/jquery-ui-timepicker-addon.css') ?>
+  <?= $this->html->css('/fancybox/jquery.fancybox.css') ?>
+  <?= $this->html->css('/wysiwyg/jquery.wysiwyg.css') ?>
+  <?= $this->html->css('/bootstrap/css/bootstrap.min.css') ?>
+  <?= $this->html->css('/bootstrap/css/bootstrap-responsive.min.css') ?>
+  <?= $this->html->css('/bootstrap/css/font-awesome.css') ?>
+
+  <?= $this->html->css('/fineuploader/fineuploader-3.4.1.css')?>
 
   <!--[if IE 7]>
-  <?= $this->html->css('../bootstrap/css/font-awesome-ie7.css') ?>
+  <?= $this->html->css('/bootstrap/css/font-awesome-ie7.css') ?>
   <![endif]-->
+
+  <?= $this->html->css('style.css')?>
 
   <script>
   var Amp = function() {

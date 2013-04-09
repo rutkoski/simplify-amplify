@@ -31,6 +31,11 @@ $config['view:helpers:menu'] = array(
   'require' => AMP_DIR . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'MenuHelper.php',
 );
 
+$config['view:helpers:icon'] = array(
+  'class' => 'IconHelper',
+  'require' => AMP_DIR . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'IconHelper.php',
+);
+
 if (file_exists(APP_DIR . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'amp.php')) {
   require_once(APP_DIR . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'amp.php');
 }
