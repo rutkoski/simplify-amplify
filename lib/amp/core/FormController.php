@@ -4,13 +4,13 @@ class FormController extends AmpController
 {
 
   /**
-   * 
+   *
    * @var Simplify_Form
    */
   protected $Form;
 
   /**
-   * 
+   *
    * @var string
    */
   protected $table;
@@ -74,7 +74,7 @@ class FormController extends AmpController
   protected function getTitle()
   {
     if (empty($this->title)) {
-      $this->title = Inflector::titleize($this->getName());
+      $this->title = Simplify_Inflector::titleize($this->getName());
     }
 
     return $this->title;
@@ -83,7 +83,7 @@ class FormController extends AmpController
   protected function getPrimaryKey()
   {
     if (empty($this->pk)) {
-      $this->pk = Inflector::singularize($this->getTable()) . '_id';
+      $this->pk = Simplify_Inflector::singularize($this->getTable()) . '_id';
     }
 
     return $this->pk;
