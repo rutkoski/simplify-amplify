@@ -53,8 +53,6 @@ class FormController extends AmpController
     $this->Form->primaryKey = $this->getPrimaryKey();
     $this->Form->title = $this->getTitle();
 
-    $this->Form->setLayout($this->getLayout());
-
     $this->Form->addAction(new Simplify_Form_Action_List());
     $this->Form->addAction(new Simplify_Form_Action_Edit());
     $this->Form->addAction(new Simplify_Form_Action_Create());
@@ -105,10 +103,10 @@ class FormController extends AmpController
       }
     }
     catch (Simplify_ValidationException $e) {
-      s::app()->warnings($e->getErrors());
+      s::app()->warnings(__('There are errors'));
     }
 
-    return $this->Form->render();
+    $this->set('formBody', $this->Form->render());
   }
 
 }

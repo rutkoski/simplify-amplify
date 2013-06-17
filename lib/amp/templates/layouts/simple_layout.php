@@ -11,11 +11,11 @@
   <title><?= Options::value('site_name') ?></title>
 
   <?= $this->html->js('jquery') ?>
-  <?= $this->html->js('../bootstrap/js/bootstrap.js') ?>
+  <?= $this->html->js('/bootstrap/js/bootstrap.js') ?>
 
-  <?= $this->html->css('../bootstrap/css/bootstrap.min.css') ?>
-  <?= $this->html->css('../bootstrap/css/bootstrap-responsive.min.css') ?>
-  <?= $this->html->css('../bootstrap/css/font-awesome.css') ?>
+  <?= $this->html->css('/bootstrap/css/bootstrap.min.css') ?>
+  <?= $this->html->css('/bootstrap/css/bootstrap-responsive.min.css') ?>
+  <?= $this->html->css('/bootstrap/css/font-awesome.css') ?>
 </head>
 
 <body>

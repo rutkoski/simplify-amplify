@@ -92,6 +92,12 @@ class AmpApplicationController extends Simplify_Controller_ApplicationController
     return sy_get_param($this->messages, $type);
   }
 
+  public function clearMessages()
+  {
+    $this->messages = null;
+    s::session()->flash('messages', $this->messages);
+  }
+
   public function warnings($msgs = null, $name = '*')
   {
     return $this->messages(self::MESSAGES_WARNINGS, $msgs, $name);

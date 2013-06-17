@@ -16,9 +16,10 @@
 
   <?= $this->html->js('jquery') ?>
   <?= $this->html->js('jquery.maskedinput.min') ?>
-  <?= $this->html->js('jquery.ui.datepicker-pt-BR') ?>
   <?= $this->html->js('jquery-ui') ?>
   <?= $this->html->js('jquery-ui-timepicker-addon') ?>
+  <?= $this->html->js('jquery.ui.datepicker-pt-BR') ?>
+  <?= $this->html->js('jquery-ui-timepicker-pt-BR') ?>
   <?= $this->html->js('/fancybox/jquery.fancybox.pack.js') ?>
   <?= $this->html->js('/wysiwyg/jquery.wysiwyg.js') ?>
   <?= $this->html->js('knockout-latest.js') ?>
@@ -106,7 +107,7 @@
     $('.lightbox').fancybox();
     $('.wysiwyg').wysiwyg();
   });
-
+/*
   $.timepicker.regional['pt-BR'] = {
     timeOnlyTitle: 'Hora',
     timeText: 'Hora',
@@ -116,11 +117,11 @@
     millisecText: 'Milisegundos',
     currentText: 'Agora',
     closeText: 'Ok',
-    ampm: false
+    ampm: true
   };
 
   $.timepicker.setDefaults($.timepicker.regional['pt-BR']);
-
+*/
   $(document).ready(function() {
     $('.submenu').hover(function () {
       $(this).children('ul').removeClass('submenu-hide').addClass('submenu-show');
@@ -198,6 +199,8 @@
         <?php if ($messages = s::app()->notices()) { ?>
         <div class="alert alert-info"><?= implode('<br/>', $messages['*']) ?></div>
         <?php } ?>
+
+        <?php s::app()->clearMessages(); ?>
 
         <?= $layout_content ?>
       </div>
