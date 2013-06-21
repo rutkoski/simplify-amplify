@@ -1,5 +1,10 @@
 <?php
 
+require_once('../vendor/rutkoski/simplify/lib/simplify.php');
+require_once('../vendor/rutkoski/simplify-thumb/lib/autoload.php');
+require_once('../vendor/rutkoski/simplify-validation/lib/autoload.php');
+require_once('../vendor/rutkoski/simplify-form/lib/autoload.php');
+
 define('AMP_DIR', dirname(__file__));
 
 $config['modules:simplify/amp:path'] = AMP_DIR;
@@ -50,25 +55,6 @@ if (! defined('OPTIONS_TABLE')) define('OPTIONS_TABLE', 'options');
 
 Simplify_Autoload::registerPath(AMP_DIR);
 Simplify_Autoload::registerPath(AMP_DIR . DIRECTORY_SEPARATOR . 'core');
-
-/**
- *
- *
- *
- */
-
-/*try {
-  $version = intval(Options::value('db_version'));
-
-  $m = new Model_Migrations_AmpMigrations();
-  $m->execute($version);
-  unset($m);
-}
-catch (DatabaseTableNotFoundException $e) {
-  $m = new Model_Migrations_AmpMigrations();
-  $m->execute(0);
-  unset($m);
-}*/
 
 /**
  *

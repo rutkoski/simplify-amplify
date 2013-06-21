@@ -65,7 +65,7 @@ class Modules
 
     require_once($base . $module['path']);
 
-    $class = Inflector::camelize($name . '_module');
+    $class = Simplify_Inflector::camelize($name . '_module');
 
     $Module = new $class;
     $Module->initialize();
@@ -89,7 +89,7 @@ class Modules
 
     require_once($base . $file);
 
-    $class = Inflector::camelize($name . '_module');
+    $class = Simplify_Inflector::camelize($name . '_module');
 
     if (! class_exists($class)) {
       continue;
@@ -116,7 +116,7 @@ class Modules
     foreach ($files as $name => $file) {
       require_once($base . $file);
 
-      $class = Inflector::camelize($name . '_module');
+      $class = Simplify_Inflector::camelize($name . '_module');
 
       if (! class_exists($class)) {
         continue;

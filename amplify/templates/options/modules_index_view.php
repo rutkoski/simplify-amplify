@@ -10,13 +10,13 @@
 
       <?php foreach ($modules as $name => $module) { ?>
       <tr class="<?php echo $this->cycle->next('default', array('odd', 'even')) ?>">
-        <td><?php echo Inflector::titleize($name) ?></td>
+        <td><?php echo Simplify_Inflector::titleize($name) ?></td>
 
         <td style="width:1%;">
           <?php if ($module['active']) { ?>
-            <a href="<?= Simplify_URL::make(null, array('action' => 'deactivate', 'name' => Inflector::titleize($name))) ?>">Deactivate</a>
+            <a href="<?= Simplify_URL::make(null, array('action' => 'deactivate', 'name' => Simplify_Inflector::titleize($name))) ?>">Deactivate</a>
           <?php } else { ?>
-            <a href="<?= Simplify_URL::make(null, array('action' => 'activate', 'name' => Inflector::titleize($name))) ?>">Activate</a>
+            <a href="<?= Simplify_URL::make(null, array('action' => 'activate', 'name' => Simplify_Inflector::titleize($name))) ?>">Activate</a>
           <?php } ?>
         </td>
       </tr>
