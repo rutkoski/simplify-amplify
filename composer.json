@@ -2,6 +2,7 @@
     "name": "rutkoski/amplify",
     "type": "library",
     "description": "Amplify CMS - Powered by Simplify PHP",
+    "minimum-stability": "dev",
     "keywords": ["cms"],
     "homepage": "https://github.com/rutkoski/amplify",
     "license": "GPL",
@@ -12,9 +13,9 @@
         }
     ],
     "require": {
-        "php": ">=5.2.4"
-    },
-    "autoload": {
-        "files": ["lib/amp.php"]
+        "rutkoski/simplify": "dev-master",
+        "rutkoski/simplify-validation": "dev-master",
+        "rutkoski/simplify-thumb": "dev-master",
+        "rutkoski/simplify-form": "dev-master"
     }
 }
