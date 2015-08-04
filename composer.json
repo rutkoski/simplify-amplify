@@ -1,21 +1,22 @@
 {
     "name": "rutkoski/amplify",
-    "type": "library",
-    "description": "Amplify CMS - Powered by Simplify PHP",
-    "minimum-stability": "dev",
-    "keywords": ["cms"],
-    "homepage": "https://github.com/rutkoski/amplify",
-    "license": "GPL",
+    "description": "Amplify CMS",
     "authors": [
         {
             "name": "Rodrigo Rutkoski Rodrigues",
             "email": "rutkoski@gmail.com"
         }
     ],
+    "minimum-stability": "dev",
     "require": {
+        "php": ">=5.3",
         "rutkoski/simplify": "dev-master",
-        "rutkoski/simplify-validation": "dev-master",
+        "rutkoski/simplify-form": "dev-master",
         "rutkoski/simplify-thumb": "dev-master",
-        "rutkoski/simplify-form": "dev-master"
+        "rutkoski/simplify-validation": "dev-master"
+    },
+    "autoload": {
+        "files": [ "autoload.php" ],
+        "psr-0": { "Amplify\\": "classes/" }
     }
 }

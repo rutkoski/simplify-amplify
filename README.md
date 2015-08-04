@@ -1,4 +1,0 @@
-simplify-php
-============
-
-Simplify PHP
