@@ -26,6 +26,8 @@ namespace Amplify;
  */
 class Install
 {
+  
+  protected static $installed = null;
 
   /**
    * Check is amp is intalled
@@ -34,14 +36,18 @@ class Install
    */
   public static function installed()
   {
-    try {
-      $found = \Simplify::db()->query()->select('COUNT(user_id)')->from(\Simplify::config()->get('amp:tables:users'))->where('user_id = ?')->execute(1)->fetchOne();
-      
-      return $found;
+    if (self::$installed === null) {
+      try {
+        \Amplify\Options::value('db_version');
+        
+        self::$installed = true;
+      }
+      catch (\Simplify\Db\TableNotFoundException $e) {
+        self::$installed = false;
+      }
     }
-    catch (\Simplify\Db\TableNotFoundException $e) {
-      return false;
-    }
+    
+    return self::$installed;
   }
 
   /**

@@ -82,7 +82,7 @@ class Application extends \Simplify\Application
   
     if (Account::validate('manage_accounts', true)) {
       $accountsMenu = new \Simplify\Menu('accounts', null, __('Accounts'));
-  
+        
       $_users = new \Simplify\MenuItem('users', __('Users'), null, new \Simplify\URL('route://admin_users'));
       $_add_user = new \Simplify\MenuItem('add_user', __('Add user'), null,
           new \Simplify\URL('route://admin_users', array('formAction' => 'create')));
@@ -113,7 +113,7 @@ class Application extends \Simplify\Application
         $permsMenu = new \Simplify\Menu('permissions', null, __('Permissions'));
         $permsMenu->addItem($_perms);
         $permsMenu->addItem($_add_perm);
-  
+        
         $accountsMenu->addItem($permsMenu);
       }
     }
@@ -129,7 +129,7 @@ class Application extends \Simplify\Application
   
       $this->menu->addItem($optionsMenu);
     }
-  
+    
     \Amplify\Modules::executeCallback('onCreateMenu', $this->menu);
   }
 

@@ -17,9 +17,6 @@
   {{ asset('fancybox/jquery.fancybox.css', 'vendor') }}
   {{ asset('fancybox/jquery.fancybox.pack.js', 'vendor') }}
 
-  {{ asset('moment/moment.min.js', 'vendor') }}
-  {{ asset('moment/lang/pt-br.js', 'vendor') }}
-
   {{ assets(['vendor', 'app']) }}
   {% endspaceless %}
 </head>

@@ -33,13 +33,15 @@ class Modules
 
   public static function executeCallback($callback)
   {
-    $modules = self::getActiveModules();
-
-    $args = func_get_args();
-    unset($args[0]);
-
-    foreach ($modules as $module) {
-      call_user_func_array(array($module, $callback), $args);
+    if (\Amplify\Install::installed()) {
+      $modules = self::getActiveModules();
+  
+      $args = func_get_args();
+      unset($args[0]);
+  
+      foreach ($modules as $module) {
+        call_user_func_array(array($module, $callback), $args);
+      }
     }
   }
 

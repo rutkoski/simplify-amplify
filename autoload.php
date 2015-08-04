@@ -4,6 +4,13 @@ $config = \Simplify::config();
 $config['amp:dir'] = preg_replace('#[\\\/]+#', '/', __dir__ . '/');
 $config['amp:prefix'] = '/admin';
 
+\Simplify::router()->match($config['amp:prefix'] . '/install',
+    array(
+        'controller' => 'Amplify\Controller\InstallController',
+        'action' => 'index',
+        'as' => 'admin_install'
+    ));
+
 \Simplify::router()->filter($config['amp:prefix'] . '/*')->parse(
     function  ($extra) use( $config)
     {
@@ -12,13 +19,6 @@ $config['amp:prefix'] = '/admin';
               'controller' => 'Amplify\Controller\HomeController',
               'action' => 'page_not_found',
               'as' => 'admin_page_not_found'
-          ));
-      
-      \Simplify::router()->match($config['amp:prefix'] . '/install', 
-          array(
-              'controller' => 'Amplify\Controller\InstallController',
-              'action' => 'index',
-              'as' => 'admin_install'
           ));
       
       \Simplify::router()->match($config['amp:prefix'] . '/login', 
@@ -100,9 +100,10 @@ $config['amp:prefix'] = '/admin';
 
 if (preg_match('#^' . $config['amp:prefix'] . '(/.*)?$#', Simplify::request()->route())) {
   
-  //$config['amp:tables_prefix'] = '';
+  if (empty($config['amp:tables_prefix'])) {
+    $config['amp:tables_prefix'] = 'amp_';
+  }
   
-
   $config['amp:tables:users'] = '{amp:tables_prefix}users';
   $config['amp:tables:groups'] = '{amp:tables_prefix}groups';
   $config['amp:tables:groups_users'] = '{amp:tables_prefix}groups_users';
