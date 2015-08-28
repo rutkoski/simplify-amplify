@@ -118,7 +118,7 @@ class Modules
   {
     $modules = array();
 
-    $base = \Simplify::config()->get('app_dir') . 'modules';
+    $base = \Simplify::config()->get('app:dir') . 'modules';
     $path = '/';
 
     if (! is_dir($base . $path)) {
