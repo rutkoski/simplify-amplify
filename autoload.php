@@ -98,19 +98,19 @@ $config['amp:prefix'] = '/admin';
       return \Simplify::request()->route();
     });
 
-if (preg_match('#^' . $config['amp:prefix'] . '(/.*)?$#', Simplify::request()->route())) {
-  
-  if (empty($config['amp:tables_prefix'])) {
+if (empty($config['amp:tables_prefix'])) {
     $config['amp:tables_prefix'] = 'amp_';
-  }
-  
-  $config['amp:tables:users'] = '{amp:tables_prefix}users';
-  $config['amp:tables:groups'] = '{amp:tables_prefix}groups';
-  $config['amp:tables:groups_users'] = '{amp:tables_prefix}groups_users';
-  $config['amp:tables:groups_permissions'] = '{amp:tables_prefix}groups_permissions';
-  $config['amp:tables:permissions'] = '{amp:tables_prefix}permissions';
-  $config['amp:tables:permissions_users'] = '{amp:tables_prefix}permissions_users';
-  $config['amp:tables:options'] = '{amp:tables_prefix}options';
+}
+
+$config['amp:tables:users'] = '{amp:tables_prefix}users';
+$config['amp:tables:groups'] = '{amp:tables_prefix}groups';
+$config['amp:tables:groups_users'] = '{amp:tables_prefix}groups_users';
+$config['amp:tables:groups_permissions'] = '{amp:tables_prefix}groups_permissions';
+$config['amp:tables:permissions'] = '{amp:tables_prefix}permissions';
+$config['amp:tables:permissions_users'] = '{amp:tables_prefix}permissions_users';
+$config['amp:tables:options'] = '{amp:tables_prefix}options';
+
+if (preg_match('#^' . $config['amp:prefix'] . '(/.*)?$#', Simplify::request()->route())) {
   
   $config['amp:modules_dir'] = '{app:dir}modules/';
   
