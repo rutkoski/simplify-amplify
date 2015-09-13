@@ -40,7 +40,7 @@ class Controller extends \Simplify\Controller
   /**
    *
    */
-  protected function beforeAction()
+  protected function beforeAction($action, $params)
   {
     try {
       if ($this->permissions !== false) {
@@ -50,7 +50,7 @@ class Controller extends \Simplify\Controller
         }
       }
 
-      parent::beforeAction();
+      parent::beforeAction($action, $params);
     }
     catch (LoginRequiredException $e) {
       \Simplify::response()->redirect(
