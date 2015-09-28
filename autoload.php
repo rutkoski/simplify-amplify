@@ -98,7 +98,7 @@ $config['amp:prefix'] = '/admin';
       return \Simplify::request()->route();
     });
 
-if (empty($config['amp:tables_prefix'])) {
+if ($config['amp:tables_prefix'] !== false) {
     $config['amp:tables_prefix'] = 'amp_';
 }
 

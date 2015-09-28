@@ -130,12 +130,12 @@ class Modules
     while ($it->valid()) {
       if (!$it->isDot()) {
         if ($it->isDir()) {
-          $class = \Simplify\Inflector::camelize($it->getFilename()) . '\Module';
-
-          $filename = $path . $class . '.php';
+          $filename = $path . $it->getFilename() . '/Module.php';
 
           if (file_exists($base . $filename)) {
             require_once ($base . $filename);
+
+            $class = \Simplify\Inflector::camelize($it->getFilename()) . '\Module';
 
             if (class_exists($class) && is_subclass_of($class, '\Amplify\Module')) {
               $modules[addslashes($class)] = new $class();
