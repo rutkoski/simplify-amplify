@@ -38,7 +38,7 @@ class Module
   public function getName()
   {
     if (empty($this->name)) {
-      $this->name = substr(get_class($this), 0, strrpos(get_class($this), 'Module'));
+      $this->name = substr(get_class($this), 0, strrpos(get_class($this), '\Module'));
     }
     return $this->name;
   }

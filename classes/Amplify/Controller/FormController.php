@@ -21,6 +21,12 @@ class FormController extends \Amplify\Controller
    *
    * @var string
    */
+  protected $tablePrefix;
+  
+  /**
+   *
+   * @var string
+   */
   protected $pk;
 
   /**
@@ -144,10 +150,19 @@ class FormController extends \Amplify\Controller
   protected function getTable()
   {
     if (empty($this->table)) {
-      $this->table = \Simplify::config()->get('amp:tables_prefix') . $this->getName();
+      $this->table = $this->getName();
     }
     
-    return $this->table;
+    return $this->getTablePrefix() . $this->table;
+  }
+  
+  protected function getTablePrefix()
+  {
+      if (empty($this->tablePrefix) && $this->tablePrefix !== false) {
+          $this->tablePrefix = \Simplify::config()->get('amp:tables_prefix');
+      }
+      
+      return $this->tablePrefix;
   }
 
   protected function getTitle()
