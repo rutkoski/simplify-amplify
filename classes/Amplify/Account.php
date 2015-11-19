@@ -105,7 +105,7 @@ class Account
   public static function getUser()
   {
     if (is_null(self::$user)) {
-      $token = \Simplify::session()->get('access_token', \Simplify::request()->get('access_token'));
+      $token = \Simplify::session()->get('amp_access_token', \Simplify::request()->get('access_token'));
 
       if (! empty($token)) {
         $user = \Simplify::db()->query()->from(\Simplify::config()->get('amp:tables:users'))->where('access_token = ?')->execute($token)->fetchRow();
@@ -261,7 +261,7 @@ class Account
    */
   public static function logout()
   {
-    \Simplify::session()->del('access_token');
+    \Simplify::session()->del('amp_access_token');
     \Simplify::session()->destroy();
 
     self::setUser(null);
@@ -276,7 +276,7 @@ class Account
   {
     $token = self::generateAccessToken($user);
 
-    \Simplify::session()->set('access_token', $token);
+    \Simplify::session()->set('amp_access_token', $token);
 
     self::setUser($user);
     self::loadUserAcl($user);
