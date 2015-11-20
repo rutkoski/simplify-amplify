@@ -77,10 +77,10 @@ class Account
       throw new LoginRequiredException('Login required');
     }
 
-    if (intval($user['user_id']) === 1) {
+    if (intval($user['user_id']) === 1 || in_array('admin', self::$acl) !== false) {
       return true;
     }
-
+    
     if (! empty($permissions)) {
       $permissions = (array) $permissions;
 

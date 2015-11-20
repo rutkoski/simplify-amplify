@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-  <title>Amplify</title>
+  <title>{{ optionsValue('site_name') ? optionsValue('site_name') : 'Amplify' }}</title>
 
   {% spaceless %}
   {{ asset('jquery/jquery.min.js', 'vendor', -1) }}
