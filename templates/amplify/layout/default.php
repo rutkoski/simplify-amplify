@@ -26,7 +26,7 @@
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span>
+          <span class="sr-only">Menu</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -41,8 +41,8 @@
 
         <ul class="nav navbar-nav navbar-right">
           <li><a href="{{ makeUrl('route://admin_account') }}"><span class="glyphicon glyphicon-user"></span> {{ user['user_email'] }}</a></li>
-          <li><a href="{{ makeUrl(config.get('app_url')) }}" target="_blank"><span class="glyphicon glyphicon-new-window"></span> Website</a></li>
-          <li><a href="{{ makeUrl('route://admin_logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          <li><a href="{{ makeUrl(config.get('app:url')) }}" target="_blank"><span class="glyphicon glyphicon-new-window"></span> Ir para o site</a></li>
+          <li><a href="{{ makeUrl('route://admin_logout') }}"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
         </ul>
       </div>
     </div>

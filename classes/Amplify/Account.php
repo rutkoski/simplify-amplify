@@ -74,7 +74,7 @@ class Account
         return false;
       }
 
-      throw new LoginRequiredException('Login required');
+      throw new LoginRequiredException('Você precisa fazer login');
     }
 
     if (intval($user['user_id']) === 1 || in_array('admin', self::$acl) !== false) {
@@ -91,7 +91,7 @@ class Account
           return false;
         }
 
-        throw new SecurityException("You don't have permission to access this area");
+        throw new SecurityException("Você não tem permissão para acessar esta área");
       }
     }
 
@@ -153,7 +153,7 @@ class Account
     $user = \Simplify::db()->query()->from(\Simplify::config()->get('amp:tables:users'))->where('user_email = ?')->execute($email)->fetchRow();
 
     if (empty($user)) {
-      throw new \Simplify\ValidationException('User not found');
+      throw new \Simplify\ValidationException('Usuário não encontrado');
     }
 
     $user['auth_token'] = sy_random_string(10);
@@ -177,7 +177,7 @@ class Account
       ->execute(array('email' => $email, 'auth' => $auth))->fetchRow();
 
     if (empty($user)) {
-      throw new \Simplify\ValidationException('User not found or wrong authorization code.');
+      throw new \Simplify\ValidationException('Usuário não encontrado ou código de autorização inválido.');
     }
 
     $pass_a = self::hash($pass_a);
@@ -185,7 +185,7 @@ class Account
     $empty = self::hash('');
 
     if ($pass_a == $empty || $pass_a != $pass_b) {
-      throw new \Simplify\ValidationException('Invalid password or passwords do not match.');
+      throw new \Simplify\ValidationException('A senha informada é inválida ou não confere.');
     }
 
     $user['user_password'] = $pass_a;
@@ -223,7 +223,7 @@ class Account
       ->execute(array('email' => $email, 'password' => $password))->fetchRow();
 
     if (empty($user)) {
-      throw new LoginException('Wrong username/password');
+      throw new LoginException('Email ou senha inválidos.');
     }
 
     $user['access_token'] = self::generateAccessToken($user);

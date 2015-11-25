@@ -45,7 +45,7 @@ class Application extends \Simplify\Application
 
     $view = \Simplify\View::factory();
     $view->setTemplate('page_not_found');
-    $view->setLayout('default');
+    $view->setLayout('layout/default');
 
     return $this->outputResponse($view);
   }
@@ -81,10 +81,10 @@ class Application extends \Simplify\Application
     $this->menu = new \Simplify\Menu('amp');
   
     if (Account::validate('manage_accounts', true)) {
-      $accountsMenu = new \Simplify\Menu('accounts', null, __('Accounts'));
+      $accountsMenu = new \Simplify\Menu('accounts', null, __('Usuários'));
         
-      $_users = new \Simplify\MenuItem('users', __('Users'), null, new \Simplify\URL('route://admin_users'));
-      $_add_user = new \Simplify\MenuItem('add_user', __('Add user'), null,
+      $_users = new \Simplify\MenuItem('users', __('Usuários'), null, new \Simplify\URL('route://admin_users'));
+      $_add_user = new \Simplify\MenuItem('add_user', __('Adicionar usuário'), null,
           new \Simplify\URL('route://admin_users', array('formAction' => 'create')));
   
       $accountsMenu->addItem($_users);
@@ -93,11 +93,11 @@ class Application extends \Simplify\Application
       $this->menu->addItem($accountsMenu);
   
       if (Account::validate('manage_groups', true)) {
-        $_groups = new \Simplify\MenuItem('groups', 'Groups', null, new \Simplify\URL('route://admin_groups'));
-        $_add_group = new \Simplify\MenuItem('add_group', __('Add group'), null,
+        $_groups = new \Simplify\MenuItem('groups', 'Grupos', null, new \Simplify\URL('route://admin_groups'));
+        $_add_group = new \Simplify\MenuItem('add_group', __('Criar grupo'), null,
             new \Simplify\URL('route://admin_groups', array('formAction' => 'create')));
   
-        $groupsMenu = new \Simplify\Menu('groups', null, __('Groups'));
+        $groupsMenu = new \Simplify\Menu('groups', null, __('Grupos'));
         $groupsMenu->addItem($_groups);
         $groupsMenu->addItem($_add_group);
   
@@ -105,12 +105,12 @@ class Application extends \Simplify\Application
       }
   
       if (Account::validate('manage_permissions', true)) {
-        $_perms = new \Simplify\MenuItem('permissions', __('Permissions'), null,
+        $_perms = new \Simplify\MenuItem('permissions', __('Permissões'), null,
             new \Simplify\URL('route://admin_permissions'));
-        $_add_perm = new \Simplify\MenuItem('add_permission', __('Add permission'), null,
+        $_add_perm = new \Simplify\MenuItem('add_permission', __('Criar permissão'), null,
             new \Simplify\URL('route://admin_permissions', array('formAction' => 'create')));
   
-        $permsMenu = new \Simplify\Menu('permissions', null, __('Permissions'));
+        $permsMenu = new \Simplify\Menu('permissions', null, __('Permissões'));
         $permsMenu->addItem($_perms);
         $permsMenu->addItem($_add_perm);
         
@@ -119,10 +119,10 @@ class Application extends \Simplify\Application
     }
   
     if (Account::validate('manage_options', true)) {
-      $optionsMenu = new \Simplify\Menu('options', null, __('Options'));
+      $optionsMenu = new \Simplify\Menu('options', null, __('Opções'));
   
-      $_gen = new \Simplify\MenuItem('general', 'General', null, new \Simplify\URL('route://admin_options'));
-      $_mod = new \Simplify\MenuItem('modules', 'Modules', 'options', new \Simplify\URL('route://admin_modules'));
+      $_gen = new \Simplify\MenuItem('general', 'Geral', null, new \Simplify\URL('route://admin_options'));
+      $_mod = new \Simplify\MenuItem('modules', 'Módulos', 'options', new \Simplify\URL('route://admin_modules'));
   
       $optionsMenu->addItem($_gen);
       $optionsMenu->addItem($_mod);

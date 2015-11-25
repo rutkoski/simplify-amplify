@@ -20,47 +20,46 @@
  *
  * @author Rodrigo Rutkoski Rodrigues <rutkoski@gmail.com>
  */
-
 namespace Amplify\Controller;
 
 /**
- *
  */
 class OptionsController extends \Amplify\Controller
 {
 
-  /**
-   *
-   * @var \Simplify\Form
-   */
-  protected $Form;
+    /**
+     *
+     * @var \Simplify\Form
+     */
+    protected $Form;
 
-  /**
-   *
-   * @var string
-   */
-  protected $template = 'form_container';
+    /**
+     *
+     * @var string
+     */
+    protected $template = 'form_container';
 
-  /**
-   * (non-PHPdoc)
-   * @see \Simplify\Controller::indexAction()
-   */
-  protected function indexAction()
-  {
-    try {
-      $this->Form = new \Simplify\Form(__('Options'));
-
-      $this->Form->addAction(new \Simplify\Form\Action\Config('config', \Simplify::config()->get('amp:tables:options'), 'option_name', 'option_value'));
-
-      $this->Form->addElement(new \Simplify\Form\Element\Text('site_name'), \Simplify\Form::ACTION_CONFIG);
-
-      $this->Form->execute();
+    /**
+     * (non-PHPdoc)
+     * 
+     * @see \Simplify\Controller::indexAction()
+     */
+    protected function indexAction()
+    {
+        try {
+            $this->Form = new \Simplify\Form('options', __('Opções'));
+            
+            $this->Form->showMenu = false;
+            
+            $this->Form->addAction(new \Simplify\Form\Action\Config('config', __('Gerais'), \Simplify::config()->get('amp:tables:options'), 'option_name', 'option_value'));
+            
+            $this->Form->addElement(new \Simplify\Form\Element\Text('site_name', __('Nome do site')), \Simplify\Form::ACTION_CONFIG);
+            
+            $this->Form->execute();
+        } catch (\Simplify\ValidationException $e) {
+            \Simplify::session()->warnings(__('Ocorreram erros'));
+        }
+        
+        $this->set('formBody', $this->Form->render());
     }
-    catch (\Simplify\ValidationException $e) {
-      \Simplify::session()->warnings(__('There are errors'));
-    }
-
-    $this->set('formBody', $this->Form->render());
-  }
-
 }

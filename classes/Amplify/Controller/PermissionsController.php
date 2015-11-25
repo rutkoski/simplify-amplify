@@ -33,8 +33,8 @@ class PermissionsController extends \Amplify\Controller\FormController
   {
     parent::initialize();
 
-    $this->Form->addElement(new \Simplify\Form\Element\Text('permission_name', 'Name'));
-    $this->Form->addElement(new \Simplify\Form\Element\Textarea('permission_description', 'Description'));
+    $this->Form->addElement(new \Simplify\Form\Element\Text('permission_name', __('Nome')));
+    $this->Form->addElement(new \Simplify\Form\Element\Textarea('permission_description', __('Descrição')));
   }
 
 }

@@ -33,10 +33,10 @@ class GroupsController extends \Amplify\Controller\FormController
   {
     parent::initialize();
 
-    $permissions = new \Simplify\Form\Element\Checkboxes('permissions', 'Permissions');
+    $permissions = new \Simplify\Form\Element\Checkboxes('permissions', __('Permissões'));
     $permissions->labelField = 'permission_name';
 
-    $this->Form->addElement(new \Simplify\Form\Element\Text('group_name', 'Name'));
+    $this->Form->addElement(new \Simplify\Form\Element\Text('group_name', __('Nome')));
     $this->Form->addElement($permissions, \Simplify\Form::ACTION_LIST | \Simplify\Form::ACTION_EDIT);
   }
 
