@@ -26,6 +26,6 @@ namespace Amplify;
 /**
  *
  */
-class SecurityException extends AmplifyException
+class AmplifyException extends \Exception
 {
 }

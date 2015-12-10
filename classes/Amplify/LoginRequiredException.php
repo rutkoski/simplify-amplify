@@ -26,6 +26,6 @@ namespace Amplify;
 /**
  *
  */
-class LoginRequiredException extends \Exception
+class LoginRequiredException extends AmplifyException
 {
 }

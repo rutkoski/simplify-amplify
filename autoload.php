@@ -80,12 +80,6 @@ $config['amp:prefix'] = '/admin';
       
       \Simplify::config()->set('theme', 'amp');
       
-      $install = \Simplify::router()->make('admin_install');
-      
-      if (! \Amplify\Install::installed() && \Simplify::request()->route() !== $install) {
-        \Simplify::response()->redirect($install);
-      }
-      
       if ($extra !== '/login' && $extra !== '/install') {
         try {
           \Amplify\Account::validate('admin');
@@ -123,5 +117,12 @@ if (preg_match('#^' . $config['amp:prefix'] . '(/.*)?$#', Simplify::request()->r
 
   $config['app:assets:path:'] = 'vendor/rutkoski/amplify/assets/';
   
-  \Simplify::app(new \Amplify\Application());
+}
+
+\Simplify::app(new \Amplify\Application());
+
+$install = \Simplify::router()->make('admin_install');
+
+if (! \Amplify\Install::installed() && \Simplify::request()->route() !== $install) {
+  \Simplify::response()->redirect($install);
 }

@@ -8,7 +8,7 @@
            <span class="caret"></span>
         </a>
         <ul class="dropdown-menu" role="menu">
-        {% include 'navbar_menu.php' with {'menu': item, 'inSubMenu': true} %}
+        {% include 'navbar_menu.html' with {'menu': item, 'inSubMenu': true} %}
         </ul>
       </li>
     {% else %}
@@ -17,7 +17,7 @@
         {% if item.icon %}<span class="{{ item.icon }}"></span>{% endif %}
         {{ item.label }}
       </li>
-      {% include 'navbar_menu.php' with {'menu': item, 'inSubMenu': true} %}
+      {% include 'navbar_menu.html' with {'menu': item, 'inSubMenu': true} %}
     {% endif %}
   {% else %}
     <li>

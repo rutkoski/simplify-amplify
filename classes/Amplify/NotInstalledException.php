@@ -26,6 +26,6 @@ namespace Amplify;
 /**
  *
  */
-class NotInstalledException extends \Exception
+class NotInstalledException extends AmplifyException
 {
 }

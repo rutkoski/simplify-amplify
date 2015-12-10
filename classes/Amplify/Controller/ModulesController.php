@@ -20,27 +20,29 @@
  *
  * @author Rodrigo Rutkoski Rodrigues <rutkoski@gmail.com>
  */
-
 namespace Amplify\Controller;
 
-/**
- *
- */
+use Amplify\AmplifyException;
+
 class ModulesController extends \Amplify\Controller
 {
 
-  protected function indexAction()
-  {
-    if (\Simplify::request()->get('activate')) {
-      \Amplify\Modules::activateModule(\Simplify::request()->get('module'));
-      \Simplify::response()->redirect(\Simplify::request()->route());
-    } elseif (\Simplify::request()->get('deactivate')) {
-      \Amplify\Modules::deactivateModule(\Simplify::request()->get('module'));
-      \Simplify::response()->redirect(\Simplify::request()->route());
+    protected function indexAction()
+    {
+        if (\Simplify::request()->get('activate')) {
+            \Amplify\Modules::activateModule(\Simplify::request()->get('module'));
+            \Simplify::response()->redirect(\Simplify::request()->route());
+        } elseif (\Simplify::request()->get('deactivate')) {
+            \Amplify\Modules::deactivateModule(\Simplify::request()->get('module'));
+            \Simplify::response()->redirect(\Simplify::request()->route());
+        }
+        
+        try {
+            $modules = \Amplify\Modules::getAllModules();
+            
+            $this->set('modules', $modules);
+        } catch (AmplifyException $e) {
+            //
+        }
     }
-
-    $modules = \Amplify\Modules::getAllModules();
-    $this->set('modules', $modules);
-  }
-
 }
