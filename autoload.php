@@ -2,7 +2,10 @@
 $config = \Simplify::config();
 
 $config['amp:dir'] = preg_replace('#[\\\/]+#', '/', __dir__ . '/');
-$config['amp:prefix'] = '/admin';
+
+if (empty($config['amp:prefix']) && $config['amp:prefix'] !== false) {
+    $config['amp:prefix'] = '/admin';
+}
 
 \Simplify::router()->match($config['amp:prefix'] . '/install',
     array(
@@ -35,7 +38,7 @@ $config['amp:prefix'] = '/admin';
               'as' => 'admin_logout'
           ));
       
-      \Simplify::router()->match($config['amp:prefix'], 
+      \Simplify::router()->match($config['amp:prefix'] ? $config['amp:prefix'] : '/', 
           array(
               'controller' => 'Amplify\Controller\HomeController',
               'as' => 'admin'
