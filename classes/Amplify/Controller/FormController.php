@@ -165,7 +165,7 @@ class FormController extends \Amplify\Controller
         return $this->Form->getAction('config');
     }
 
-    protected function getTable()
+    public function getTable()
     {
         if (empty($this->table)) {
             $this->table = $this->getName();
@@ -174,7 +174,7 @@ class FormController extends \Amplify\Controller
         return $this->getTablePrefix() . $this->table;
     }
 
-    protected function getTablePrefix()
+    public function getTablePrefix()
     {
         if (empty($this->tablePrefix) && $this->tablePrefix !== false) {
             $this->tablePrefix = \Simplify::config()->get('amp:tables_prefix');
@@ -183,7 +183,7 @@ class FormController extends \Amplify\Controller
         return $this->tablePrefix;
     }
 
-    protected function getTitle()
+    public function getTitle()
     {
         if (empty($this->title)) {
             $this->title = \Simplify\Inflector::titleize($this->getName());
@@ -192,7 +192,7 @@ class FormController extends \Amplify\Controller
         return $this->title;
     }
 
-    protected function getPrimaryKey()
+    public function getPrimaryKey()
     {
         if (empty($this->pk)) {
             $this->pk = \Simplify\Inflector::singularize($this->getName()) . '_id';
@@ -201,12 +201,12 @@ class FormController extends \Amplify\Controller
         return $this->pk;
     }
 
-    protected function getLabel()
+    public function getLabel()
     {
         return $this->label;
     }
 
-    protected function getSortField()
+    public function getSortField()
     {
         if (empty($this->sortField)) {
             $this->sortField = \Simplify\Inflector::singularize($this->getName()) . '_order';
