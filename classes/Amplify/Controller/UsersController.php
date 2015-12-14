@@ -23,11 +23,16 @@
 namespace Amplify\Controller;
 
 use Simplify\Form\Element\Checkboxes;
+use Amplify\Account;
 
 /**
  */
 class UsersController extends \Amplify\Controller\FormController
 {
+    
+    protected $permissions = array(
+        '^account' => 'admin'
+    );
 
     /**
      * (non-PHPdoc)
@@ -37,22 +42,6 @@ class UsersController extends \Amplify\Controller\FormController
     {
         parent::initialize();
         
-        $groups = new Checkboxes('groups', __('Grupos'));
-        $groups->table = \Simplify::config()->get('amp:tables:groups');
-        $groups->foreignKey = 'group_id';
-        $groups->associationPrimaryKey = 'user_id';
-        $groups->associationForeignKey = 'group_id';
-        $groups->associationTable = \Simplify::config()->get('amp:tables:groups_users');
-        $groups->labelField = 'group_name';
-        
-        $permissions = new Checkboxes('permissions', __('Permissões'));
-        $permissions->table = \Simplify::config()->get('amp:tables:permissions');
-        $permissions->foreignKey = 'permission_id';
-        $permissions->associationPrimaryKey = 'user_id';
-        $permissions->associationForeignKey = 'permission_id';
-        $permissions->associationTable = \Simplify::config()->get('amp:tables:permissions_users');
-        $permissions->labelField = 'permission_description';
-        
         $password = new \Simplify\Form\Element\Password('user_password', __('Senha'));
         
         $email = new \Simplify\Form\Element\Email('user_email', __('Email'));
@@ -60,8 +49,28 @@ class UsersController extends \Amplify\Controller\FormController
         
         $this->Form->addElement($email);
         $this->Form->addElement($password, \Simplify\Form::ACTION_ALL ^ \Simplify\Form::ACTION_LIST);
-        $this->Form->addElement($groups, \Simplify\Form::ACTION_LIST | \Simplify\Form::ACTION_EDIT);
-        $this->Form->addElement($permissions, \Simplify\Form::ACTION_LIST | \Simplify\Form::ACTION_EDIT);
+
+        if (Account::validate('admin', true)) {
+            $groups = new Checkboxes('groups', __('Grupos'));
+            $groups->table = \Simplify::config()->get('amp:tables:groups');
+            $groups->foreignKey = 'group_id';
+            $groups->associationPrimaryKey = 'user_id';
+            $groups->associationForeignKey = 'group_id';
+            $groups->associationTable = \Simplify::config()->get('amp:tables:groups_users');
+            $groups->labelField = 'group_name';
+            
+            $this->Form->addElement($groups, \Simplify\Form::ACTION_LIST | \Simplify\Form::ACTION_EDIT);
+    
+            $permissions = new Checkboxes('permissions', __('Permissões'));
+            $permissions->table = \Simplify::config()->get('amp:tables:permissions');
+            $permissions->foreignKey = 'permission_id';
+            $permissions->associationPrimaryKey = 'user_id';
+            $permissions->associationForeignKey = 'permission_id';
+            $permissions->associationTable = \Simplify::config()->get('amp:tables:permissions_users');
+            $permissions->labelField = 'permission_description';
+            
+            $this->Form->addElement($permissions, \Simplify\Form::ACTION_LIST | \Simplify\Form::ACTION_EDIT);
+        }
         
         $this->Form->label = 'user_email';
 

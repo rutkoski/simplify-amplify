@@ -20,47 +20,64 @@
  *
  * @author Rodrigo Rutkoski Rodrigues <rutkoski@gmail.com>
  */
-
 namespace Amplify;
 
 /**
- *
  * Base Controller
- *
  */
 class Controller extends \Simplify\Controller
 {
 
-  /**
-   *
-   * @var string[]
-   */
-  protected $permissions;
+    /**
+     *
+     * @var string[]
+     */
+    protected $permissions;
 
-  /**
-   *
-   */
-  protected function beforeAction($action, $params)
-  {
-    try {
-      if ($this->permissions !== false) {
-        if (Account::getUser() || !in_array($this->getAction(), array('login', 'logout'))) {
-          Account::validate('admin');
-          Account::validate($this->permissions);
+    /**
+     * (non-PHPdoc)
+     * @see \Simplify\Controller::beforeAction()
+     */
+    protected function beforeAction($action, $params)
+    {
+        $this->checkPermissions($action, $params);
+    }
+
+    protected function checkPermissions($action, $params)
+    {
+        try {
+            $permissions = array();
+            
+            if (! empty($this->permissions)) {
+                foreach ($this->permissions as $key => $value) {
+                    if ($action === $key) {
+                        $permissions = array_merge($permissions, (array) $value);
+                    } elseif (substr($key, 0, 1) === '^' && $action !== substr($key, 1)) {
+                        $permissions = array_merge($permissions, (array) $value);
+                    } elseif (is_numeric($key)) {
+                        $permissions = array_merge($permissions, (array) $value);
+                    }
+                }
+            }
+            
+            if (! empty($permissions)) {
+                Account::validate($permissions);
+            }
+            
+            parent::beforeAction($action, $params);
+        } catch (LoginRequiredException $e) {
+            $loginUrl = array(
+                'route://admin?action=login',
+                array(
+                    'redirect' => \Simplify::request()->base() . \Simplify::request()->uri()
+                )
+            );
+            
+            \Simplify::response()->redirect($loginUrl);
+        } catch (SecurityException $e) {
+            \Simplify::session()->warnings($e->getMessage());
+            
+            \Simplify::response()->redirect('route://admin');
         }
-      }
-
-      parent::beforeAction($action, $params);
     }
-    catch (LoginRequiredException $e) {
-      \Simplify::response()->redirect(
-        array('route://admin?action=login', array('redirect' => \Simplify::request()->base() . \Simplify::request()->uri())));
-    }
-    catch (SecurityException $e) {
-      \Simplify::session()->warnings($e->getMessage());
-
-      \Simplify::response()->redirect('route://admin');
-    }
-  }
-
 }
