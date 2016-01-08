@@ -38,7 +38,7 @@ class Install
   {
     if (self::$installed === null) {
       try {
-        \Amplify\Options::value('db_version');
+        \Amplify\Options::read('db_version');
         
         self::$installed = true;
       }
