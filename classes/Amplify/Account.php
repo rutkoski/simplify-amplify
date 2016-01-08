@@ -214,16 +214,16 @@ class Account
    * @param string $password
    * @return array
    */
-  public static function login($email, $password)
+  public static function login($username, $password)
   {
     $password = self::hash($password);
 
     $user = \Simplify::db()->query()->from(\Simplify::config()->get('amp:tables:users'))
-      ->where('(user_email = :email) and user_password = :password')
-      ->execute(array('email' => $email, 'password' => $password))->fetchRow();
+      ->where('(user_username = :username || user_email = :username) and user_password = :password')
+      ->execute(array('username' => $username, 'password' => $password))->fetchRow();
 
     if (empty($user)) {
-      throw new LoginException('Email ou senha inválidos.');
+      throw new LoginException('Nome de usuário/email ou senha inválidos.');
     }
 
     $user['access_token'] = self::generateAccessToken($user);
@@ -282,10 +282,11 @@ class Account
     self::loadUserAcl($user);
   }
 
-  public static function createUser($email, $password)
+  public static function createUser($username, $email, $password)
   {
     $data = array(
       'user_email' => $email,
+      'user_username' => $username,
       'user_password' => self::hash($password)
     );
 

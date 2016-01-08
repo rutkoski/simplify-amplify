@@ -33,17 +33,19 @@ class InstallController extends \Amplify\Controller
 
   protected function indexAction()
   {
+    $username = '';
     $email = '';
     $password = '';
 
     if (\Simplify::request()->method(\Simplify\Request::POST)) {
       try {
+        $username = \Simplify::request()->post('username');
         $email = \Simplify::request()->post('email');
         $password = \Simplify::request()->post('password');
 
-        \Amplify\Install::performInstall($email, $password);
+        \Amplify\Install::performInstall($username, $email, $password);
 
-        \Simplify::session()->notices(__('Amplify is ready! Login with your email and password.'));
+        \Simplify::session()->notices(__('Instalação realizada com sucesso.'));
 
         $url = \Simplify::request()->get('redirect', \Simplify::router()->make('admin'));
 
@@ -54,6 +56,7 @@ class InstallController extends \Amplify\Controller
       }
     }
 
+    $this->set('username', $username);
     $this->set('email', $email);
     $this->set('password', $password);
   }

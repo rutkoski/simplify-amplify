@@ -56,8 +56,11 @@ class Install
    * @param string $email          
    * @param string $password          
    */
-  public static function performInstall($email, $password)
+  public static function performInstall($username, $email, $password)
   {
+    $_username = new \Simplify\Validation\Required('Nome de usuário inválido');
+    $_username->validate($username);
+    
     $_email = new \Simplify\Validation\Email('Invalid email', 'Enter your email');
     $_email->validate($email);
     
@@ -69,19 +72,19 @@ class Install
     $permissions = array(
         array(
             'admin',
-            'Global admin rights'
+            'Administrador'
         ),
         array(
             'manage_accounts',
-            'Manage user accounts'
+            'Gerenciar usuários'
         ),
         array(
             'manage_groups',
-            'Manage groups'
+            'Gerenciar grupos'
         ),
         array(
             'manage_permissions',
-            'Manage user and group permissions'
+            'Gerenciar permissões'
         )
     );
     
@@ -89,7 +92,7 @@ class Install
       \Amplify\Account::createPermission($permission[0], $permission[1]);
     }
     
-    $user_id = \Amplify\Account::createUser($email, $password);
+    $user_id = \Amplify\Account::createUser($username, $email, $password);
     
     \Amplify\Account::addUserPermission($user_id, 'admin');
     
@@ -163,13 +166,14 @@ class Install
           
           'CREATE TABLE IF NOT EXISTS `' . \Simplify::config()->get('amp:tables:users') . '` (
           `user_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+          `user_username` varchar(255) NOT NULL,
           `user_email` varchar(255) NOT NULL,
           `user_password` varchar(40) NOT NULL,
           `access_token` varchar(40) DEFAULT NULL,
           PRIMARY KEY (`user_id`),
         	INDEX `user_password` (`user_password`),
         	INDEX `access_token` (`access_token`),
-          UNIQUE KEY `user_email` (`user_email`)
+          UNIQUE KEY `user_username` (`user_username`)
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8;'
       );
       

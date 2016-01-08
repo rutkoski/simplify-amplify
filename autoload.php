@@ -26,14 +26,14 @@ if (empty($config['amp:prefix']) && $config['amp:prefix'] !== false) {
       
       \Simplify::router()->match($config['amp:prefix'] . '/login', 
           array(
-              'controller' => 'Amplify\Controller\HomeController',
-              'action' => 'login',
+              'controller' => 'Amplify\Controller\LoginController',
+              'action' => 'index',
               'as' => 'admin_login'
           ));
       
       \Simplify::router()->match($config['amp:prefix'] . '/logout', 
           array(
-              'controller' => 'Amplify\Controller\HomeController',
+              'controller' => 'Amplify\Controller\LoginController',
               'action' => 'logout',
               'as' => 'admin_logout'
           ));
