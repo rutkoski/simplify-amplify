@@ -81,7 +81,7 @@ if (empty($config['amp:prefix']) && $config['amp:prefix'] !== false) {
               'as' => 'admin_modules'
           ));
       
-      \Simplify::config()->set('theme', 'amp');
+      \Simplify::config()->set('theme', 'amplify');
       
       if ($extra !== '/login' && $extra !== '/install') {
         try {
