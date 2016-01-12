@@ -42,7 +42,7 @@
                 </ul>
                 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ makeUrl('route://admin_account') }}"><span class="glyphicon glyphicon-user"></span> {{ user['user_email'] }}</a></li>
+                    <li><a href="{{ makeUrl('route://admin_account') }}"><span class="glyphicon glyphicon-user"></span> {{ user['user_username'] }} &lt;{{ user['user_email'] }}&gt;</a></li>
                     <li><a href="{{ makeUrl(config.get('app:url')) }}" target="_blank"><span class="glyphicon glyphicon-new-window"></span> Ir para o site</a></li>
                     <li><a href="{{ makeUrl('route://admin_logout') }}"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
                 </ul>

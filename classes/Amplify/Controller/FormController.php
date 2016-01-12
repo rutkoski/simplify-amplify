@@ -230,16 +230,18 @@ class FormController extends \Amplify\Controller
                 
                 return \Simplify::response()->redirect(\Simplify::request()->route());
             }
-        } catch (\Simplify\Db\TableNotFoundException $e) {
-            $create = $this->Form->url()->set('createRepository', 1);
-            \Simplify::session()->warnings(__('Repository not found. Click <a href="' . $create . '">here</a> to create it.') . '<br/>' . $e->getMessage());
-            return;
-        } catch (\Simplify\Db\ColumnNotFoundException $e) {
-            $create = $this->Form->url()->set('createColumns', 1);
-            \Simplify::session()->warnings(__('Column not found. Click <a href="' . $create . '">here</a> to create it.') . '<br/>' . $e->getMessage());
-            return;
+//         } catch (\Simplify\Db\TableNotFoundException $e) {
+//             $create = $this->Form->url()->set('createRepository', 1);
+//             \Simplify::session()->warnings(__('Repository not found. Click <a href="' . $create . '">here</a> to create it.') . '<br/>' . $e->getMessage());
+//             return;
+//         } catch (\Simplify\Db\ColumnNotFoundException $e) {
+//             $create = $this->Form->url()->set('createColumns', 1);
+//             \Simplify::session()->warnings(__('Column not found. Click <a href="' . $create . '">here</a> to create it.') . '<br/>' . $e->getMessage());
+//             return;
         } catch (\Simplify\ValidationException $e) {
             \Simplify::session()->warnings(__('There are errors') . '<br/>' . $e->getMessage());
+        } catch (\Exception $e) {
+            \Simplify::session()->warnings($e->getMessage());
         }
         
         $this->set('formBody', $this->Form->render());

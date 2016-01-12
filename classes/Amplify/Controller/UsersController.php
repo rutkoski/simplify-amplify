@@ -43,10 +43,13 @@ class UsersController extends \Amplify\Controller\FormController
         parent::initialize();
         
         $password = new \Simplify\Form\Element\Password('user_password', __('Senha'));
+
+        $username = new \Simplify\Form\Element\Label('user_username', __('Nome de Usuário'));
         
         $email = new \Simplify\Form\Element\Email('user_email', __('Email'));
         $email->unique = __('Email já cadastrado');
-        
+
+        $this->Form->addElement($username);
         $this->Form->addElement($email);
         $this->Form->addElement($password, \Simplify\Form::ACTION_ALL ^ \Simplify\Form::ACTION_LIST);
 
@@ -116,7 +119,9 @@ class UsersController extends \Amplify\Controller\FormController
         
         foreach ($data as &$row) {
             if ($row[\Simplify\Form::ID] == 1) {
+                $row['elements']['groups']['label'] = __('Grupos');
                 $row['elements']['groups']['controls'] = '<p class="form-control-static">' . __('Este usuário pertence a todos os grupos') . '</p>';
+                $row['elements']['permissions']['label'] = __('Permissões');
                 $row['elements']['permissions']['controls'] = '<p class="form-control-static">' . __('Este usuário tem todas as permissões') . '</p>';
             }
         }
