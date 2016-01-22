@@ -72,6 +72,11 @@ if (! $config['amp:tables_prefix'] && $config['amp:tables_prefix'] !== false) {
         'controller' => 'Amplify\Controller\ModulesController',
         'as' => 'admin_modules'
     ));
+
+    \Simplify::router()->match($config['amp:prefix'] . '/options/email', array(
+        'controller' => 'Amplify\Controller\EmailController',
+        'as' => 'admin_options_email'
+    ));
     
     \Simplify::config()->set('theme', 'amplify');
     
