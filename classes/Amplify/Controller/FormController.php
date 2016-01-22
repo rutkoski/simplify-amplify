@@ -240,7 +240,8 @@ class FormController extends \Amplify\Controller
 //             \Simplify::session()->warnings(__('Column not found. Click <a href="' . $create . '">here</a> to create it.') . '<br/>' . $e->getMessage());
 //             return;
         } catch (\Simplify\ValidationException $e) {
-            \Simplify::session()->warnings(__('There are errors') . '<br/>' . $e->getMessage());
+            \Simplify::session()->warnings(__('Verifique os erros abaixo'));
+            //\Simplify::session()->warnings($e->getErrors());
         } catch (\Exception $e) {
             \Simplify::session()->warnings($e->getMessage());
         }

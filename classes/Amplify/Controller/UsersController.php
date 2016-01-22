@@ -24,6 +24,7 @@ namespace Amplify\Controller;
 
 use Simplify\Form\Element\Checkboxes;
 use Amplify\Account;
+use Simplify\Form;
 
 /**
  */
@@ -44,7 +45,9 @@ class UsersController extends \Amplify\Controller\FormController
         
         $password = new \Simplify\Form\Element\Password('user_password', __('Senha'));
 
-        $username = new \Simplify\Form\Element\Label('user_username', __('Nome de Usuário'));
+        //$username = new \Simplify\Form\Element\Label('user_username', __('Nome de Usuário'));
+        $username = new \Simplify\Form\Element\Text('user_username', __('Nome de Usuário'));
+        $username->unique = true;
         
         $email = new \Simplify\Form\Element\Email('user_email', __('Email'));
         $email->unique = __('Email já cadastrado');

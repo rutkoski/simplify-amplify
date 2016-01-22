@@ -56,7 +56,7 @@ class Application extends \Simplify\Application
    */
   protected function outputResponse($output)
   {
-    if ($output instanceof \Simplify\View) {
+    if (defined('SY_IN_ADMIN') && $output instanceof \Simplify\View) {
       if (\Amplify\Install::installed() && ! \Simplify::request()->json()) {
         $output->set('user', \Amplify\Account::getUser());
 
