@@ -228,7 +228,8 @@ class FormController extends \Amplify\Controller
             if ($result == \Simplify\Form::RESULT_SUCCESS) {
                 \Simplify::session()->notices('Success');
                 
-                return \Simplify::response()->redirect(\Simplify::request()->route());
+                //return \Simplify::response()->redirect(\Simplify::request()->route());
+                return \Simplify::response()->redirect($this->Form->url()->extend()->set('formAction', null));
             }
 //         } catch (\Simplify\Db\TableNotFoundException $e) {
 //             $create = $this->Form->url()->set('createRepository', 1);
