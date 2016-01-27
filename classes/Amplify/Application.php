@@ -1,6 +1,8 @@
 <?php
 namespace Amplify;
 
+use Simplify\AssetManager;
+
 class Application extends \Simplify\Application
 {
 
@@ -36,7 +38,7 @@ class Application extends \Simplify\Application
 
     /**
      * (non-PHPdoc)
-     * 
+     *
      * @see \Simplify\Application::pageNotFound()
      */
     protected function pageNotFound()
@@ -52,7 +54,7 @@ class Application extends \Simplify\Application
 
     /**
      * (non-PHPdoc)
-     * 
+     *
      * @see \Simplify\Application::outputResponse()
      */
     protected function outputResponse($output)
@@ -68,6 +70,11 @@ class Application extends \Simplify\Application
             $output->set('notices', \Simplify::session()->notices());
             
             \Simplify::session()->clearMessages();
+            
+            AssetManager::load('fancybox/jquery.fancybox.css', 'vendor');
+            AssetManager::load('fancybox/jquery.fancybox.pack.js', 'vendor');
+            
+            AssetManager::load('amplify.js', 'app');
         }
         
         return parent::outputResponse($output);
