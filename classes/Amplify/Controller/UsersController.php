@@ -45,12 +45,11 @@ class UsersController extends \Amplify\Controller\FormController
         
         $password = new \Simplify\Form\Element\Password('user_password', __('Senha'));
 
-        //$username = new \Simplify\Form\Element\Label('user_username', __('Nome de Usuário'));
         $username = new \Simplify\Form\Element\Text('user_username', __('Nome de Usuário'));
-        $username->unique = true;
+        $username->unique = Form::ACTION_FORM;
         
         $email = new \Simplify\Form\Element\Email('user_email', __('Email'));
-        $email->unique = __('Email já cadastrado');
+        $email->unique = Form::ACTION_FORM;
 
         $this->Form->addElement($username);
         $this->Form->addElement($email);
@@ -111,8 +110,9 @@ class UsersController extends \Amplify\Controller\FormController
 
     public function onBeforeDelete(\Simplify\Form\Action $action, $row)
     {
-        if ($row['id'] == 1) {
-            throw new \Simplify\ValidationException(__('Não é possível remover este usuário'));
+        if (sy_get_param($row, Form::ID) == 1) {
+            \Simplify::session()->warnings(__('Não é possível remover este usuário'));
+            \Simplify::response()->redirect($this->Form->url()->extend()->set('formAction', null));
         }
     }
 

@@ -228,20 +228,18 @@ class FormController extends \Amplify\Controller
             if ($result == \Simplify\Form::RESULT_SUCCESS) {
                 \Simplify::session()->notices('Success');
                 
-                //return \Simplify::response()->redirect(\Simplify::request()->route());
                 return \Simplify::response()->redirect($this->Form->url()->extend()->set('formAction', null));
             }
-//         } catch (\Simplify\Db\TableNotFoundException $e) {
-//             $create = $this->Form->url()->set('createRepository', 1);
-//             \Simplify::session()->warnings(__('Repository not found. Click <a href="' . $create . '">here</a> to create it.') . '<br/>' . $e->getMessage());
-//             return;
-//         } catch (\Simplify\Db\ColumnNotFoundException $e) {
-//             $create = $this->Form->url()->set('createColumns', 1);
-//             \Simplify::session()->warnings(__('Column not found. Click <a href="' . $create . '">here</a> to create it.') . '<br/>' . $e->getMessage());
-//             return;
         } catch (\Simplify\ValidationException $e) {
             \Simplify::session()->warnings(__('Verifique os erros abaixo'));
-            //\Simplify::session()->warnings($e->getErrors());
+            
+            $errors = (array) $e->getErrors();
+            
+            foreach ($errors as $key => $errors) {
+                if (is_int($key)) {
+                    \Simplify::session()->warnings($errors);
+                }
+            }
         } catch (\Exception $e) {
             \Simplify::session()->warnings($e->getMessage());
         }

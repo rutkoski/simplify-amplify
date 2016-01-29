@@ -44,6 +44,6 @@ class EmailController extends ConfigController
         $this->Form->addElement(new Text('mail_smtp_host', 'Host'), Form::ACTION_CONFIG);
         $this->Form->addElement(new Text('mail_smtp_port', 'Porta'), Form::ACTION_CONFIG);
         $this->Form->addElement(new Text('mail_smtp_user', 'Usuário'), Form::ACTION_CONFIG);
-        $this->Form->addElement(new Password('mail_smtp_password', 'Senha'), Form::ACTION_CONFIG)->setOption('hashCallback', false);
+        $this->Form->addElement(new Password('mail_smtp_password', 'Senha'), Form::ACTION_CONFIG)->setOption('hashCallback', false)->setOption('required', false);
     }
 }
