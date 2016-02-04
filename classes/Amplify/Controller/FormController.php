@@ -1,8 +1,14 @@
 <?php
 namespace Amplify\Controller;
 
+use Simplify\Form\Mptt;
+use Simplify\Form\Sortable;
+use Simplify\Form;
+
 class FormController extends \Amplify\Controller
 {
+
+    protected $type = Form::FORM_TYPE_DEFAULT;
 
     /**
      *
@@ -33,6 +39,24 @@ class FormController extends \Amplify\Controller
      * @var string
      */
     protected $label;
+
+    /**
+     *
+     * @var string
+     */
+    protected $parentField;
+
+    /**
+     *
+     * @var string
+     */
+    protected $leftField;
+
+    /**
+     *
+     * @var string
+     */
+    protected $rightField;
 
     /**
      *
@@ -80,11 +104,21 @@ class FormController extends \Amplify\Controller
 
     protected function createForm()
     {
-        if ($this->sortField) {
-            $this->Form = new \Simplify\Form\Sortable($this->getName(), $this->getTitle());
-            $this->Form->sortField = $this->getSortField();
-        } else {
-            $this->Form = new \Simplify\Form($this->getName(), $this->getTitle());
+        switch ($this->type) {
+            case Form::FORM_TYPE_SORTABLE:
+                $this->Form = new Sortable($this->getName(), $this->getTitle());
+                $this->Form->sortField = $this->getSortField();
+                break;
+            
+            case Form::FORM_TYPE_MPTT:
+                $this->Form = new Mptt($this->getName(), $this->getTitle());
+                $this->Form->parent = $this->getParentField();
+                $this->Form->left = $this->getLeftField();
+                $this->Form->right = $this->getRightField();
+                break;
+            
+            default:
+                $this->Form = new Form($this->getName(), $this->getTitle());
         }
         
         $this->Form->table = $this->getTable();
@@ -201,6 +235,33 @@ class FormController extends \Amplify\Controller
         return $this->pk;
     }
 
+    public function getParentField()
+    {
+        if (empty($this->parentField)) {
+            $this->parentField = \Simplify\Inflector::singularize($this->getName()) . '_parent_id';
+        }
+        
+        return $this->parentField;
+    }
+
+    public function getRightField()
+    {
+        if (empty($this->rightField)) {
+            $this->rightField = \Simplify\Inflector::singularize($this->getName()) . '_right';
+        }
+        
+        return $this->rightField;
+    }
+
+    public function getLeftField()
+    {
+        if (empty($this->leftField)) {
+            $this->leftField = \Simplify\Inflector::singularize($this->getName()) . '_left';
+        }
+        
+        return $this->leftField;
+    }
+
     public function getLabel()
     {
         return $this->label;
@@ -228,7 +289,9 @@ class FormController extends \Amplify\Controller
             if ($result == \Simplify\Form::RESULT_SUCCESS) {
                 \Simplify::session()->notices('Success');
                 
-                return \Simplify::response()->redirect($this->Form->url()->extend()->set('formAction', null));
+                return \Simplify::response()->redirect($this->Form->url()
+                    ->extend()
+                    ->set('formAction', null));
             }
         } catch (\Simplify\ValidationException $e) {
             \Simplify::session()->warnings(__('Verifique os erros abaixo'));
