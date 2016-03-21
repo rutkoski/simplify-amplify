@@ -66,12 +66,7 @@ class Controller extends \Simplify\Controller
             
             parent::beforeAction($action, $params);
         } catch (LoginRequiredException $e) {
-            $loginUrl = array(
-                'route://admin?action=login',
-                array(
-                    'redirect' => \Simplify::request()->base() . \Simplify::request()->uri()
-                )
-            );
+            $loginUrl = array('route://admin_login', array('redirect' => \Simplify::request()->base() . \Simplify::request()->uri()));
             
             \Simplify::response()->redirect($loginUrl);
         } catch (SecurityException $e) {

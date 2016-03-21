@@ -1,4 +1,7 @@
 <?php
+
+session_name('sid');
+
 $config = \Simplify::config();
 
 $config['amp:dir'] = preg_replace('#[\\\/]+#', '/', __dir__ . '/');
@@ -80,13 +83,13 @@ if (! $config['amp:tables_prefix'] && $config['amp:tables_prefix'] !== false) {
     
     \Simplify::config()->set('theme', 'amplify');
     
-    if ($extra !== '/login' && $extra !== '/install') {
+    /*if ($extra !== '/login' && $extra !== '/install') {
         try {
             \Amplify\Account::validate('admin');
         } catch (Amplify\LoginRequiredException $e) {
             \Simplify::response()->redirect(\Simplify::config()->get('amp:prefix') . '/login');
         }
-    }
+    }*/
     
     return \Simplify::request()->route();
 });

@@ -23,6 +23,8 @@
 
 namespace Amplify;
 
+use Simplify\Password;
+
 /**
  *
  */
@@ -105,12 +107,18 @@ class Account
   public static function getUser()
   {
     if (is_null(self::$user)) {
-      $token = \Simplify::session()->get('amp_access_token', \Simplify::request()->get('access_token'));
+      $token = session_id();
 
       if (! empty($token)) {
-        $user = \Simplify::db()->query()->from(\Simplify::config()->get('amp:tables:users'))->where('access_token = ?')->execute($token)->fetchRow();
+        $user = \Simplify::db()->query()
+            ->from(\Simplify::config()->get('amp:tables:users'))
+            ->select('user_id')
+            ->select('user_email')
+            ->where('access_token = ?')
+            ->execute($token)
+            ->fetchRow();
 
-        if ($user && $token == self::generateAccessToken($user)) {
+        if ($user) {
           self::authenticate($user);
         } else {
           self::$user = false;
@@ -216,17 +224,19 @@ class Account
    */
   public static function login($username, $password)
   {
-    $password = self::hash($password);
-
     $user = \Simplify::db()->query()->from(\Simplify::config()->get('amp:tables:users'))
-      ->where('(user_username = :username || user_email = :username) and user_password = :password')
-      ->execute(array('username' => $username, 'password' => $password))->fetchRow();
+      ->where('(user_username = :username || user_email = :username)')
+      ->execute(array('username' => $username))->fetchRow();
 
     if (empty($user)) {
       throw new LoginException('Nome de usuário/email ou senha inválidos.');
     }
 
-    $user['access_token'] = self::generateAccessToken($user);
+    if (!Password::check($password, $user['user_password'])) {
+        throw new LoginException('Nome de usuário/email ou senha inválidos.');
+    }
+    
+    $user['access_token'] = session_id();//self::generateAccessToken($user);
 
     $data = array('user_id' => $user['user_id'], 'access_token' => $user['access_token']);
 
@@ -252,7 +262,7 @@ class Account
    */
   public static function hash($password)
   {
-    return md5($password);
+    return Password::hash($password);
   }
 
   /**
@@ -261,7 +271,7 @@ class Account
    */
   public static function logout()
   {
-    \Simplify::session()->del('amp_access_token');
+    \Simplify::session()->del('token');
     \Simplify::session()->destroy();
 
     self::setUser(null);
@@ -276,7 +286,7 @@ class Account
   {
     $token = self::generateAccessToken($user);
 
-    \Simplify::session()->set('amp_access_token', $token);
+    \Simplify::session()->set('token', $token);
 
     self::setUser($user);
     self::loadUserAcl($user);

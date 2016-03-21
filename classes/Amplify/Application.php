@@ -13,16 +13,16 @@ class Application extends \Simplify\Application
     protected $menu;
 
     /**
-     *
-     * @return \Simplify\MatchedRoute
+     * (non-PHPdoc)
+     * @see \Simplify\Application::initialize()
      */
-    protected function parseRoute()
+    protected function initialize()
     {
-        \Amplify\Modules::executeCallback('onInitialize');
-        
-        return parent::parseRoute();
-    }
+        parent::initialize();
 
+        \Amplify\Modules::executeCallback('onInitialize');
+    }
+    
     /**
      *
      * @return \Simplify\Menu
@@ -54,27 +54,31 @@ class Application extends \Simplify\Application
 
     /**
      * (non-PHPdoc)
-     *
      * @see \Simplify\Application::outputResponse()
      */
     protected function outputResponse($output)
     {
         if (defined('SY_IN_ADMIN') && $output instanceof \Simplify\View) {
-            if (\Amplify\Install::installed() && ! \Simplify::request()->json()) {
+            if (\Amplify\Install::installed() && !($output instanceof \Simplify\View\Json)) {
                 $output->set('user', \Amplify\Account::getUser());
                 
                 $output->set('menu', $this->menu());
+
+                AssetManager::load('fancybox/jquery.fancybox.css', 'vendor');
+                AssetManager::load('fancybox/jquery.fancybox.pack.js', 'vendor');
+                
+                AssetManager::load('amplify.js', 'app');
             }
             
-            $output->set('warnings', \Simplify::session()->warnings());
-            $output->set('notices', \Simplify::session()->notices());
+            if (\Simplify::session()->warnings()) {
+                $output->set('warnings', \Simplify::session()->warnings());
+            }
+            
+            if (\Simplify::session()->notices()) {
+                $output->set('notices', \Simplify::session()->notices());
+            }
             
             \Simplify::session()->clearMessages();
-            
-            AssetManager::load('fancybox/jquery.fancybox.css', 'vendor');
-            AssetManager::load('fancybox/jquery.fancybox.pack.js', 'vendor');
-            
-            AssetManager::load('amplify.js', 'app');
         }
         
         return parent::outputResponse($output);

@@ -1,7 +1,7 @@
 <?php
 namespace Amplify\Controller;
 
-class LoginController extends \Simplify\Controller
+class LoginController extends \Amplify\Controller
 {
 
     /**
@@ -20,10 +20,15 @@ class LoginController extends \Simplify\Controller
         
         if (\Simplify::request()->method(\Simplify\Request::POST)) {
             try {
+                $this->set('__post', true);
                 $username = \Simplify::request()->post('username');
                 $password = \Simplify::request()->post('password');
                 
                 \Amplify\Account::login($username, $password);
+                
+                if (\Simplify::request()->json()) {
+                    return true;
+                }
                 
                 $url = \Simplify::request()->get('redirect', 'route://admin');
                 
