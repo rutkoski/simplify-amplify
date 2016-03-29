@@ -4,6 +4,10 @@ session_name('sid');
 
 $config = \Simplify::config();
 
+if (file_exists($config['app:dir'] . 'config/amplify.php')) {
+    require_once($config['app:dir'] . 'config/amplify.php');
+}
+
 $config['amp:dir'] = preg_replace('#[\\\/]+#', '/', __dir__ . '/');
 
 if (empty($config['amp:prefix']) && $config['amp:prefix'] !== false) {

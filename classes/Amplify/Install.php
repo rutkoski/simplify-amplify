@@ -58,13 +58,13 @@ class Install
    */
   public static function performInstall($username, $email, $password)
   {
-    $_username = new \Simplify\Validation\Required('Nome de usuário inválido');
+    $_username = new \Simplify\Validation\Required(__('Nome de usuário inválido'));
     $_username->validate($username);
     
-    $_email = new \Simplify\Validation\Email('Invalid email', 'Enter your email');
+    $_email = new \Simplify\Validation\Email(__('Email inválido'), __('Informe o email'));
     $_email->validate($email);
     
-    $_passw = new \Simplify\Validation\Regex('Invalid password', '/^[a-zA-Z0-9]{4,}$/');
+    $_passw = new \Simplify\Validation\Regex(__('Senha inválida'), '/^[ _+-.,!@#$%^&*();\/|<>"\'a-zA-Z0-9]{4,}$/');
     $_passw->validate($password);
     
     self::upgrade();
@@ -73,6 +73,10 @@ class Install
         array(
             'admin',
             'Administrador'
+        ),
+        array(
+            'access_admin_panel',
+            'Acessar o painel de administração'
         ),
         array(
             'manage_accounts',
@@ -168,8 +172,8 @@ class Install
           `user_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
           `user_username` varchar(255) NOT NULL,
           `user_email` varchar(255) NOT NULL,
-          `user_password` varchar(40) NOT NULL,
-          `access_token` varchar(40) DEFAULT NULL,
+          `user_password` char(60) NOT NULL,
+          `access_token` char(60) DEFAULT NULL,
           PRIMARY KEY (`user_id`),
         	INDEX `user_password` (`user_password`),
         	INDEX `access_token` (`access_token`),

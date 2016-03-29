@@ -57,6 +57,10 @@ class Modules
         $modules = (array) \Amplify\Options::value('amp_active_modules');
         if (! in_array($path, $modules)) {
             $modules[] = $path;
+
+            $module = self::loadModule($path);
+            $module->onActivate();
+
             \Amplify\Options::update('amp_active_modules', $modules);
         }
     }
@@ -65,9 +69,11 @@ class Modules
     {
         $modules = (array) \Amplify\Options::value('amp_active_modules');
         if (in_array($path, $modules)) {
-            $modules = array_diff($modules, array(
-                $path
-            ));
+            $modules = array_diff($modules, array($path));
+
+            $module = self::loadModule($path);
+            $module->onDeactivate();
+
             \Amplify\Options::update('amp_active_modules', $modules);
         }
     }
@@ -168,5 +174,10 @@ class Modules
         }
         
         return $modules;
+    }
+    
+    protected static function loadModule($path)
+    {
+        return new $path();
     }
 }

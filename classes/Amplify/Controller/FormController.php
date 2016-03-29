@@ -98,8 +98,8 @@ class FormController extends \Amplify\Controller
         parent::initialize();
         
         $this->createForm();
-        $this->createActions();
-        $this->createElements();
+        $this->createActions($this->Form);
+        $this->createElements($this->Form);
     }
 
     protected function createForm()
@@ -126,30 +126,30 @@ class FormController extends \Amplify\Controller
         $this->Form->label = $this->getLabel();
     }
 
-    protected function createActions()
+    protected function createActions(\Simplify\Form $form)
     {
         if ($this->show(\Simplify\Form::ACTION_LIST)) {
-            $this->Form->addAction(new \Simplify\Form\Action\Index(null, __('Listar')));
+            $form->addAction(new \Simplify\Form\Action\Index(null, __('Listar')));
         }
         
         if ($this->show(\Simplify\Form::ACTION_VIEW)) {
-            $this->Form->addAction(new \Simplify\Form\Action\View(null, __('Visualizar')));
+            $form->addAction(new \Simplify\Form\Action\View(null, __('Visualizar')));
         }
         
         if ($this->show(\Simplify\Form::ACTION_EDIT)) {
-            $this->Form->addAction(new \Simplify\Form\Action\Edit(null, __('Editar')));
+            $form->addAction(new \Simplify\Form\Action\Edit(null, __('Editar')));
         }
         
         if ($this->show(\Simplify\Form::ACTION_CREATE)) {
-            $this->Form->addAction(new \Simplify\Form\Action\Create(null, __('Criar')));
+            $form->addAction(new \Simplify\Form\Action\Create(null, __('Criar')));
         }
         
         if ($this->show(\Simplify\Form::ACTION_DELETE)) {
-            $this->Form->addAction(new \Simplify\Form\Action\Delete(null, __('Remover')));
+            $form->addAction(new \Simplify\Form\Action\Delete(null, __('Remover')));
         }
     }
 
-    protected function createElements()
+    protected function createElements(\Simplify\Form $form)
     {
         //
     }

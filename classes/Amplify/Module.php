@@ -20,51 +20,98 @@
  *
  * @author Rodrigo Rutkoski Rodrigues <rutkoski@gmail.com>
  */
-
 namespace Amplify;
 
 /**
- *
  */
 class Module
 {
 
-  public $active;
-  
-  protected $name;
+    public $active;
 
-  protected $description;
-  
-  public function getName()
-  {
-    if (empty($this->name)) {
-      $this->name = substr(get_class($this), 0, strrpos(get_class($this), '\Module'));
+    protected $name;
+
+    protected $description;
+
+    /**
+     *
+     * @var \Simplify\Config
+     */
+    protected $config;
+
+    /**
+     *
+     * @var \Simplify\Router
+     */
+    protected $router;
+
+    public function __construct()
+    {
+        $this->config = \Simplify::config();
+        $this->router = \Simplify::router();
     }
-    return $this->name;
-  }
 
-  public function onInitialize()
-  {
-  }
+    /**
+     * Get module name.
+     * 
+     * @return string
+     */
+    public function getName()
+    {
+        if (empty($this->name)) {
+            $this->name = substr(get_class($this), 0, strrpos(get_class($this), '\Module'));
+        }
+        return $this->name;
+    }
 
-  public function onActivate()
-  {
-  }
+    /**
+     * Runs on module initialization.
+     * This is a good place to define routes, set config options.
+     */
+    public function onInitialize()
+    {
+        //
+    }
 
-  public function onDeactivate()
-  {
-  }
+    /**
+     * Runs on module activation.
+     */
+    public function onActivate()
+    {
+        //
+    }
 
-  public function onInstall()
-  {
-  }
+    /**
+     * Runs on module deactivation.
+     */
+    public function onDeactivate()
+    {
+        //
+    }
 
-  public function onUninstall()
-  {
-  }
+    /**
+     * Runs on module install.
+     * It's the module's responsability to check if module is actually already installed.
+     */
+    public function onInstall()
+    {
+        //
+    }
 
-  public function onCreateMenu(\Simplify\Menu $menu)
-  {
-  }
+    /**
+     * Runs on module removal.
+     * It's the module's responsability to check if module is actually already installed.
+     */
+    public function onUninstall()
+    {
+        //
+    }
 
+    /**
+     * Runs on amplify's menu creation.
+     */
+    public function onCreateMenu(\Simplify\Menu $menu)
+    {
+        //
+    }
 }

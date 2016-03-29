@@ -34,8 +34,22 @@ class Controller extends \Simplify\Controller
      */
     protected $permissions;
 
+    protected function initialize()
+    {
+        if ($this->permissions !== false && SY_IN_ADMIN && Account::getUser()) {
+            try {
+                Account::validate('access_admin_panel');
+            } catch (SecurityException $e) {
+                \Simplify::response()->redirect('route://admin_logout');
+            }
+        }
+        
+        parent::initialize();
+    }
+
     /**
      * (non-PHPdoc)
+     * 
      * @see \Simplify\Controller::beforeAction()
      */
     protected function beforeAction($action, $params)
@@ -66,7 +80,12 @@ class Controller extends \Simplify\Controller
             
             parent::beforeAction($action, $params);
         } catch (LoginRequiredException $e) {
-            $loginUrl = array('route://admin_login', array('redirect' => \Simplify::request()->base() . \Simplify::request()->uri()));
+            $loginUrl = array(
+                'route://admin_login',
+                array(
+                    'redirect' => \Simplify::request()->base() . \Simplify::request()->uri()
+                )
+            );
             
             \Simplify::response()->redirect($loginUrl);
         } catch (SecurityException $e) {
