@@ -7,13 +7,12 @@
             "email": "rutkoski@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3",
-        "rutkoski/simplify": "dev-master",
-        "rutkoski/simplify-form": "dev-master",
-        "rutkoski/simplify-thumb": "dev-master",
-        "rutkoski/simplify-validation": "dev-master"
+        "rutkoski/simplify": "1.*",
+        "rutkoski/simplify-form": "1.*",
+        "rutkoski/simplify-thumb": "1.*",
+        "rutkoski/simplify-validation": "1.*"
     },
     "autoload": {
         "files": [ "autoload.php" ],
