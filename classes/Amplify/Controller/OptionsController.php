@@ -55,6 +55,9 @@ class OptionsController extends \Amplify\Controller
             
             $this->Form->addElement(new \Simplify\Form\Element\Text('site_name', __('Nome do site')), \Simplify\Form::ACTION_CONFIG);
             
+            $url = new \Simplify\Form\Element\Text('site_url', __('URL do site'));
+            $this->Form->addElement($url, \Simplify\Form::ACTION_CONFIG);
+            
             $this->Form->execute();
         } catch (\Simplify\ValidationException $e) {
             \Simplify::session()->warnings(__('Ocorreram erros'));

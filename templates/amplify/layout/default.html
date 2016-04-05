@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     
-    <title>{{ optionsValue('site_name') ? optionsValue('site_name') : 'Amplify' }}</title>
+    <title>{{ pageTitle ? pageTitle ~ ' - ' : '' }}{{ optionsValue('site_name') ? optionsValue('site_name') : 'Amplify' }}</title>
     
     {% spaceless %}
     {{ asset('jquery/jquery.min.js', 'vendor', -1) }}
@@ -43,7 +43,7 @@
                 
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ makeUrl('route://admin_account') }}"><span class="glyphicon glyphicon-user"></span> {{ user['user_username'] }} &lt;{{ user['user_email'] }}&gt;</a></li>
-                    <li><a href="{{ makeUrl(config.get('app:url')) }}" target="_blank"><span class="glyphicon glyphicon-new-window"></span> Ir para o site</a></li>
+                    <li><a href="{{ optionsValue('site_url') ? optionsValue('site_url') : makeUrl(config.get('app:url')) }}" target="_blank"><span class="glyphicon glyphicon-new-window"></span> Ir para o site</a></li>
                     <li><a href="{{ makeUrl('route://admin_logout') }}"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
                 </ul>
             </div>
