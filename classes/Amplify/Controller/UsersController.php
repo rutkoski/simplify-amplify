@@ -30,31 +30,32 @@ use Simplify\Form;
  */
 class UsersController extends \Amplify\Controller\FormController
 {
-    
+
     protected $permissions = array(
         '^account' => 'admin'
     );
 
     /**
      * (non-PHPdoc)
-     * @see \Amplify\Controller\FormController::initialize()
+     * 
+     * @see \Amplify\Controller\FormController::createElements()
      */
-    protected function initialize()
+    protected function createElements(\Simplify\Form $form)
     {
-        parent::initialize();
-        
         $password = new \Simplify\Form\Element\Password('user_password', __('Senha'));
-
+        
         $username = new \Simplify\Form\Element\Text('user_username', __('Nome de Usuário'));
         $username->unique = Form::ACTION_FORM;
+        $username->minLength = 5;
         
         $email = new \Simplify\Form\Element\Email('user_email', __('Email'));
         $email->unique = Form::ACTION_FORM;
-
+        $email->required = true;
+        
         $this->Form->addElement($username);
         $this->Form->addElement($email);
         $this->Form->addElement($password, \Simplify\Form::ACTION_ALL ^ \Simplify\Form::ACTION_LIST);
-
+        
         if (Account::validate('admin', true)) {
             $groups = new Checkboxes('groups', __('Grupos'));
             $groups->table = \Simplify::config()->get('amp:tables:groups');
@@ -65,7 +66,7 @@ class UsersController extends \Amplify\Controller\FormController
             $groups->labelField = 'group_name';
             
             $this->Form->addElement($groups, \Simplify\Form::ACTION_LIST | \Simplify\Form::ACTION_EDIT);
-    
+            
             $permissions = new Checkboxes('permissions', __('Permissões'));
             $permissions->table = \Simplify::config()->get('amp:tables:permissions');
             $permissions->foreignKey = 'permission_id';
@@ -78,7 +79,7 @@ class UsersController extends \Amplify\Controller\FormController
         }
         
         $this->Form->label = 'user_email';
-
+        
         $this->Form->title = __('Usuários');
         
         $this->Form->addListener(\Simplify\Form::ON_RENDER, $this);
@@ -112,16 +113,17 @@ class UsersController extends \Amplify\Controller\FormController
     {
         if (sy_get_param($row, Form::ID) == 1) {
             \Simplify::session()->warnings(__('Não é possível remover este usuário'));
-            \Simplify::response()->redirect($this->Form->url()->extend()->set('formAction', null));
+            \Simplify::response()->redirect($this->Form->url()
+                ->extend()
+                ->set('formAction', null));
         }
     }
 
     public function onRender(\Simplify\Form\Action $action)
     {
         $data = $action->get('data');
-        
         foreach ($data as &$row) {
-            if ($row[\Simplify\Form::ID] == 1) {
+            if (sy_get_param($row, \Simplify\Form::ID) == 1) {
                 $row['elements']['groups']['label'] = __('Grupos');
                 $row['elements']['groups']['controls'] = '<p class="form-control-static">' . __('Este usuário pertence a todos os grupos') . '</p>';
                 $row['elements']['permissions']['label'] = __('Permissões');
