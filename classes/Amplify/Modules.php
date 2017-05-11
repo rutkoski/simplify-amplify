@@ -71,8 +71,10 @@ class Modules
         if (in_array($path, $modules)) {
             $modules = array_diff($modules, array($path));
 
-            $module = self::loadModule($path);
-            $module->onDeactivate();
+            if (class_exists($path)) {
+                $module = self::loadModule($path);
+                $module->onDeactivate();
+            }
 
             \Amplify\Options::update('amp_active_modules', $modules);
         }
